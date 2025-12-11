@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My AI Bot</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    #box { width: 300px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h2>AI Chatbot</h2>
+
+  <input id="box" placeholder="Type something..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <h3>Response:</h3>
+  <pre id="reply"></pre>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById("box").value;
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+
+      document.getElementById("reply").innerText = data.reply;
+    }
+  </script>
+</body>
+</html>
